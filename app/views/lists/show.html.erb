@@ -1,19 +1,29 @@
-<h1><%= @list.name %></h1>
-
-<h2>Movies:</h2>
-
-<% @list.movies.each do |movie| %>
-  <div>
-    <%= movie.title %>
+<div class="container py-5">
+   <h1>My lists</h1>
+   <h2>My list: <%= @list.name %></h2>
+  <div class="row">
+      <%# <h2>Movies:</h2>  %>
+      <% @list.movies.each do |movie| %>
+        <div class = "col-3 p-3">
+          <h4><%= movie.title %></h4>
+          <%= link_to list_path(@list), class:"text-decoration-none" do %>
+            <div class="card-category" data-aos="zoom-in" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= movie.poster_url %>)">
+              <%= movie.title %>
+            </div>
+          <% end %>
+          <% bookmark = Bookmark.find_by(list_id: @list.id, movie_id: movie.id) %>
+          <%= bookmark.comment if bookmark %>
+        </div>
+      <% end %>
   </div>
-<% end %>
 
-<h2>Add Movie:</h2>
+  <h2>Add Movie:</h2>
 
-<%= simple_form_for [@list, Bookmark.new] do |f| %>
-  <%= f.association :movie, collection: Movie.all %>
-  <%= f.input :comment %>
-  <%= f.button :submit, 'Add Movie' %>
-<% end %>
+  <%= simple_form_for [@list, @bookmark] do |f| %>
+    <%= f.association :movie, collection: Movie.all %>
+    <%= f.input :comment %>
+    <%= f.button :submit, 'Add Movie' %>
+  <% end %>
 
-<%= link_to "Back to Lists", lists_path %>
+  <%= link_to "Back to Lists", lists_path %>
+</div>
