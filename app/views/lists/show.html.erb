@@ -9,6 +9,7 @@
           <%= link_to list_path(@list), class:"text-decoration-none" do %>
             <div class="card-category" data-aos="zoom-in" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= movie.poster_url %>)">
               <%= movie.title %>
+              <%= @list.movies.count %> movies
             </div>
           <% end %>
           <% bookmark = Bookmark.find_by(list_id: @list.id, movie_id: movie.id) %>
