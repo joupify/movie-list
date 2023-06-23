@@ -2,7 +2,7 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show]
 
   def index
-    @list = List.all
+    @lists = List.all
   end
 
   def show
@@ -34,6 +34,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    param.require(:list).permit(:name)
+    params.require(:list).permit(:name)
   end
 end
