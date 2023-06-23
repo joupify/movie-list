@@ -90,11 +90,13 @@ Attributes
 A movie has a title (e.g. "Wonder Woman 1984"), an overview ("Wonder Woman comes into conflict with the Soviet Union during the Cold War in the 1980s!"), a poster url and a rating (6.9).
 A list has a name (e.g. "Drama", "Comedy", "Classic", "To rewatch", ... )
 A bookmark adds a movie to a list (e.g. Wonder Woman has been added to the "Girl Power" watch list). So each bookmark references a movie and a list, with a comment. The comment field is for the user to add a little note on the bookmark (e.g. Alan Turing recommended this movie).
+
 Validation
 A movie must have a unique title and an overview.
 A list must have a unique name.
 A bookmark must be linked to a movie and a list, and the [movie, list] pairings should be unique.
 The comment of a bookmark cannot be shorter than 6 characters.
+
 Associations
 A list has many bookmarks
 A list has many movies through bookmarks
@@ -103,6 +105,7 @@ A bookmark belongs to a movie
 A bookmark belongs to a list
 You can’t delete a movie if it is referenced in at least one bookmark.
 When you delete a list, you should delete all associated bookmarks (but not the movies as they can be referenced in other lists).
+
 2 - Seed the movies
 Our app will not allow users to create movies. Instead, we will generate a static seed of movies to choose from. Write this seed, for example
 
@@ -150,6 +153,7 @@ GET "lists/42"
 A user can create a new list
 GET "lists/new"
 POST "lists"
+
 4 - Routing, Controller, Views for bookmarks
 A user can add a new bookmark (movie/list pair) to an existing list
 Checkout simple_form docs about f.association to easily create a select dropdown for our list of movies.
