@@ -1,1 +1,19 @@
 <h1><%= @list.name %></h1>
+
+<h2>Movies:</h2>
+
+<% @list.movies.each do |movie| %>
+  <div>
+    <%= movie.title %>
+  </div>
+<% end %>
+
+<h2>Add Movie:</h2>
+
+<%= simple_form_for [@list, Bookmark.new] do |f| %>
+  <%= f.association :movie, collection: Movie.all %>
+  <%= f.input :comment %>
+  <%= f.button :submit, 'Add Movie' %>
+<% end %>
+
+<%= link_to "Back to Lists", lists_path %>

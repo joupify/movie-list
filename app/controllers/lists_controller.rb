@@ -18,14 +18,14 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list), notice: "successfully created"
     else
-      render new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
 
   def destroy
     @list.destroy
-    redirect_to lists_path, status: :see_other
+    redirect_to lists_path(@list), status: :see_other
   end
   private
 
