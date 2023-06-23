@@ -2,7 +2,7 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show]
 
   def index
-    @list = List.all
+    @lists = List.all
   end
 
   def show
@@ -18,14 +18,14 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to list_path(@list), notice: "successfully created"
     else
-      render new, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
 
   def destroy
     @list.destroy
-    redirect_to lists_path, status: :see_other
+    redirect_to lists_path(@list), status: :see_other
   end
   private
 
@@ -34,6 +34,6 @@ class ListsController < ApplicationController
   end
 
   def list_params
-    param.require(:list).permit(:name)
+    params.require(:list).permit(:name)
   end
 end
