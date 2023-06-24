@@ -2,6 +2,12 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show]
 
   def index
+
+    if params[:search].present?
+      @movies = Movie.where("title LIKE ?", "%#{params[:search]}%")
+    else
+      @movies = Movie.all
+    end
     @lists = List.all
   end
 

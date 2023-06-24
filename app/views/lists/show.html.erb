@@ -1,28 +1,33 @@
+
 <div class="container py-5">
    <div >
    <%# class="d-flex align-items-center justify-content-between" %>
-    <h3 class="mb-0">My Lists</h3>
-    <h4>List Name: <%= @list.name %></h4>
+    <h3 class="mb-0">My List</h3>
+    <h4> <%= @list.name %></h4>
     <%= @list.movies.count %> movies in the list
   </div>
-  <div class="row">
-      <%# <h2>Movies:</h2>  %>
-      <% @list.movies.each do |movie| %>
-        <div class = "col-3 p-3">
-
-          <%= link_to list_path(@list), class:"text-decoration-none" do %>
-            <div class="card-category" data-aos="zoom-in" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%= movie.poster_url %>)">
-              <%= movie.title %>
-
+ <div class="row my-2">
+    <% @list.movies.each do |movie| %>
+      <% bookmark = Bookmark.find_by(list: @list, movie: movie) %>
+      <div class="col-12 col-sm-4 mb-4" data-aos="zoom-in">
+        <div class="bg-white rounded shadow h-100">
+          <%= image_tag movie.poster_url, alt: movie.title, class: "movie-img rounded-top" %>
+          <div class="p-3 rounded-bottom d-flex flex-column">
+            <strong><%= movie.title %> <span class="text-muted font-weight-normal">• <%= movie.rating %> <i class="fas fa-star star-yellow"></i></span></strong>
+            <small class="text-muted"><%= movie.overview %></small>
+            <div class="d-flex align-items-end justify-content-between pt-4">
+              <div>
+                <i class="fas fa-quote-left me-2"></i><small class="flex-grow-1"><%= bookmark.comment %></small>
+              </div>
+              <small class="text-right flex-shrink-0"><%= link_to "delete", bookmark_path(bookmark), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{movie.title} from your #{@list.name} list"}, class: 'text-danger' %></small>
             </div>
-          <% end %>
-          <% bookmark = Bookmark.find_by(list_id: @list.id, movie_id: movie.id) %>
-          <%= bookmark.comment if bookmark %>
-           <%= link_to "delete this list", list_path(@list), class: "btn btn-cancel", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
+          </div>
         </div>
-      <% end %>
+      </div>
+    <% end %>
   </div>
-
+    <%= link_to "Remove this list", list_path(@list), class: "btn btn-cancel", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this list?" } %>
+    <hr></hr>
   <h2>Add Movie:</h2>
 
   <%= simple_form_for [@list, @bookmark] do |f| %>
@@ -33,8 +38,10 @@
 
   <%= link_to "Back to Lists", lists_path %>
 
-  <%= render "reviews/form", review: @review %>
-
+ <hr class="my-5">
+  <div class="row">
+   <%= render "reviews/form", review: @review %>
+  </dir>
 </div>
 
 
