@@ -2,19 +2,20 @@ class BookmarksController < ApplicationController
   before_action :set_bookmark, only: [:destroy]
   before_action :set_list, only: [:show]
 
+
   def new
-    @bookmark = Bookmark.new
-    @movies = Movie.all
+    # @bookmark = Bookmark.new
+    # @movies = Movie.all
   end
 
-  def create
+   def create
     @list = List.find(params[:list_id])
     @bookmark = @list.bookmarks.build(bookmark_params)
 
     if @bookmark.save
       redirect_to @list, notice: 'Movie was successfully added to the list.'
     else
-      render :new
+      render 'lists/show'
     end
   end
 
