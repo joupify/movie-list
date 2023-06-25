@@ -8,35 +8,26 @@
 
 
 
-require 'open-uri'
-require 'json'
+require "open-uri"
+require "json"
 
 puts "Cleaning up database..."
 Movie.destroy_all
 puts "Database cleaned"
 
-# Fetch movie data from the API
-url = 'http://tmdb.lewagon.com/movie/top_rated'
-movies_json = URI.open(url).read
-movies_data = JSON.parse(movies_json)
-
-# Retrieve the base URL from the /configuration API
-config_url = 'http://tmdb.lewagon.com/configuration'
-config_json = URI.open(config_url).read
-config_data = JSON.parse(config_json)
-base_url = config_data['images']['base_url']
-
-# Iterate over the movie data and create movie records
-  movies_data['results'].each do |movie_data|
-  # Extract relevant attributes from movie_data
-  title = movie_data['title']
-  overview = movie_data['overview']
-  poster_path = movie_data['poster_path']
-
-  # Construct the full image URL
-  poster_url = "#{base_url}w500#{poster_path}"
-
-  # Create a new movie record in the database
-  Movie.create(title: title, overview: overview, poster_url: poster_url)
+url = "http://tmdb.lewagon.com/movie/top_rated"
+10.times do |i|
+  puts "Importing movies from page #{i + 1}"
+  movies = JSON.parse(URI.open("#{url}?page=#{i + 1}").read)['results']
+  movies.each do |movie|
+    puts "Creating #{movie['title']}"
+    base_poster_url = "https://image.tmdb.org/t/p/original"
+    Movie.create(
+      title: movie["title"],
+      overview: movie["overview"],
+      poster_url: "#{base_poster_url}#{movie["backdrop_path"]}",
+      rating: movie["vote_average"]
+    )
+  end
 end
 puts "Movies created"
