@@ -23,10 +23,12 @@ class ListsController < ApplicationController
 
   def new
     @list = List.new
+    @list.photo = params[:file]
   end
 
   def create
     @list = List.new(list_params)
+    @list.photo = params[:list][:photo]
     if @list.save
       redirect_to list_path(@list), notice: "successfully created"
     else
