@@ -2,14 +2,16 @@ class ListsController < ApplicationController
   before_action :set_list, only: [:show]
 
   def index
-
     if params[:search].present?
-      @movies = Movie.where("title LIKE ?", "%#{params[:search]}%")
+      search_query = params[:search]
+      @movies = Movie.where("title ILIKE ?", "%#{search_query}%").sort_by { |movie| movie.title.casecmp(search_query) }
     else
       @movies = Movie.all
     end
     @lists = List.all
   end
+
+
 
   def show
     @bookmark = Bookmark.new

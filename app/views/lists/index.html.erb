@@ -6,6 +6,8 @@
         <%= submit_tag "Search", class:"submit" %>
       <% end %>
   </div>
+    <% if params[:search].present? %>
+    <h2>Search Results:</h2>
       <% if @movies.any? %>
         <div class="movie-list">
           <% @movies.each do |movie| %>
@@ -17,7 +19,7 @@
       <% else %>
         <p>No movies found.</p>
       <% end %>
-
+    <% end %>
 </div>
 
 
