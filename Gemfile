@@ -50,6 +50,9 @@ gem "autoprefixer-rails"
 gem "font-awesome-sass", "~> 6.1"
 gem "simple_form"
 gem "cloudinary"
+gem 'carrierwave'
+gem 'mini_magick', '~> 4.5', '>= 4.5.1'
+
 
 gem 'open-uri'
 

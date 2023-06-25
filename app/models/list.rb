@@ -3,5 +3,5 @@ class List < ApplicationRecord
   has_many :movies, through: :bookmarks, dependent: :destroy
   has_many :reviews, dependent: :destroy
   validates :name, presence: true
-  has_one_attached :photo
+  mount_uploader :photo, ImageUploader
 end
