@@ -25,6 +25,9 @@
 !/tmp/storage/
 !/tmp/storage/.keep
 
+# Ignore .env file containing credentials.
+.env*
+
 /public/assets
 
 # Ignore master key for decrypting credentials and more.
