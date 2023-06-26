@@ -1,5 +1,5 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: [:show]
+  before_action :set_list, only: [:show, :destroy]
 
   def index
     if params[:search].present?
@@ -28,9 +28,12 @@ class ListsController < ApplicationController
 
   def create
     @list = List.new(list_params)
-    @list.photo = params[:list][:photo]
+    list.photo = params[:list][:photo]
+
+
+    raise
     if @list.save
-      redirect_to list_path(@list), notice: "successfully created"
+      redirect_to list_path(@list), notice: "list successfully created"
     else
       render :new, status: :unprocessable_entity
     end

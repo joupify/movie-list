@@ -1,3 +1,21 @@
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  margin-bottom: -50px; /* Adjust this value based on the height of your footer */
+}
+
+.footer {
+  height: 50px; /* Adjust this value based on the height of your footer */
+  position: relative;
+  margin-top: 150px; /* Adjust this value based on the height of your footer */
+  clear: both;
+}
+
+
+
 .footer {
   background: #F4F4F4;
   display: flex;
